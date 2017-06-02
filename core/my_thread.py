@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-该多线程主要的目的是为了，处理多台设备运行。
+    Deal with multi devices
+    @ Author Juan
+    @ data 2017.05.31
+    @ Modifier:
 """
 
 import Queue
-import threading
-import time
-import os
 import logging
+import os
 import subprocess
-from conftest import disconnectRemoteSession
+import threading
+
+from conftest import disconnect_remote_session
 
 logger = logging.getLogger(__name__)
 q = Queue.Queue(0)
@@ -44,20 +47,17 @@ class MyThread(threading.Thread):
         """
             Do useful work here.
         """
-        logger.info(self.name + "\t begin to run devices is  " + serial)
+        logger.info(self.name + "\t begin to run " + serial)
         thread_name = self.name
-        doJob(thread_name, file, serial)
+        do_job(thread_name, file, serial)
 
 
-def doJob(thread_name, file, serial):
+def do_job(thread_name, file, serial):
     """
-        do work function 1
+        Do work function 1
     """
-    time.sleep(2)
     logger.info(thread_name + " begin to do job and the docker_compose address is " + file)
-    # change into directory and docker-compose up
     os.chdir(file)
-    # print os.getcwd()
     if os.path.isdir(file):
         dc_files = os.listdir(file)
         for temp in dc_files:
@@ -66,40 +66,38 @@ def doJob(thread_name, file, serial):
                     subprocess.call(["docker-compose up"], shell=True)
                 except Exception as err:
                     logger.error(err)
-                finally:
-                    disconnectRemoteSession(serial)
-                    logger.info("release session.")
+                    disconnect_remote_session(serial)
+                    logger.info(thread_name + " release session.")
+                else:
+                    logger.info(thread_name + " normal run!")
             else:
                 pass
     else:
-        os.system("This is not directory.")
+        os.system(thread_name + " this is not directory and cannot find docker_compose.yml to up! ")
 
 
-def putJobs(base_path):
+def put_jobs(base_path=None):
     """
         put jobs in queue
     """
-    logger.info("Begin to put jobs in queue......!")
+    logger.info("Begin to put jobs in queue......")
     base_path = os.path.abspath(base_path)
     files = os.listdir(base_path)
-    for file in files:
-        serial = file
-        file = os.path.join(base_path, file)
-        dict = {"file": file, "serial": serial}
-        q.put(dict)
-    logger.info("put " + str(q.qsize()) + " job.....")
+    for f in files:
+        serial = f
+        f = os.path.join(base_path, f)
+        d = {"file": f, "serial": serial}
+        q.put(d)
+    logger.info("Put " + str(q.qsize()) + " job.....")
     return q
 
 
 if __name__ == '__main__':
     print "begin..."
     # put some work to q
-    # q = putJobs(docker_composes_files_path)
+    # q = put_jobs(docker_composes_files_path)
     # # print total job q's size
     # print "job q'size", q.qsize()
     # # start threads to work
     # for x in range(NUM_WORKERS):
     #     MyThread(q).start()
-    # #     # if q is not empty, wait
-    # # while q.qsize()>0:
-    # #    time.sleep(0.1)

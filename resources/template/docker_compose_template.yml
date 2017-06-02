@@ -14,5 +14,5 @@ services:
     command: "{{APPIUM_CARTIER_CMD}}"
     volumes:
         - {{APPIUM_CARTIER_LOGS_VOLUMES}}
-        - {{DOCKCOMPOSE_VOLUMES}}
+        - {{DOCKER_COMPOSE_VOLUMES}}
         - {{APP_APK_VOLUMES}}
