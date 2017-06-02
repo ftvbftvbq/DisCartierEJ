@@ -78,6 +78,9 @@ RUN appium-doctor --android
 #=======================================
 # app.sh include adb connect & appium 
 # and client case
+# if you want change app_shell to other
+# name, you need to change app_shell to
+# other name in generator.py around line 65
 #=======================================
 RUN mkdir /app_shell
 COPY ./app.sh /app_shell/
@@ -98,12 +101,12 @@ RUN echo "Asia/shanghai" > /etc/timezone && \
 # pull code from git
 #=======================================	
 
-
+RUN echo 'liuwei'
 RUN git clone https://github.com/haifengrundadi/CartierEJ.git
 
-WORKDIR cartier
+WORKDIR CartierEJ
 
-RUN pip install -r requirements.txt #-i http://pypi.xiaohongshu.com/simple & mkdir /logs —trusted-host pypi.xiaohongshu.com
+RUN pip install -r requirements.txt
 
 WORKDIR tests/smoketest
 

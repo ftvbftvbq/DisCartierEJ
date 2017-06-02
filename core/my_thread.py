@@ -66,8 +66,8 @@ def do_job(thread_name, file, serial):
                     subprocess.call(["docker-compose up"], shell=True)
                 except Exception as err:
                     logger.error(err)
-                    disconnect_remote_session(serial)
                     logger.info(thread_name + " release session.")
+                    disconnect_remote_session(serial)
                 else:
                     logger.info(thread_name + " normal run!")
             else:

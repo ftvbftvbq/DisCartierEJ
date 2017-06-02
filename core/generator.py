@@ -87,9 +87,10 @@ def up_docker_composes(docker_composes_yml_base_path=None):
     """
     logger.info("Use 'docker-compose up' to start all docker-compose.yml")
     q = my_thread.put_jobs(docker_composes_yml_base_path)
-    for x in range(my_thread.NUM_WORKERS + 1):
+    for i in range(my_thread.NUM_WORKERS):
         try:
             my_thread.MyThread(q).start()
+            i += 1
         except Exception as err:
             logger.error(err)
 
@@ -159,3 +160,4 @@ if __name__ == '__main__':
                               data)
     # up docker compose
     up_docker_composes(docker_composes_files_path)
+

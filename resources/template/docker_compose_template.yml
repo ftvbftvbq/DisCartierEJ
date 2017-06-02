@@ -2,17 +2,19 @@ version: '2'
 
 services:
   appium:
-    image: {{APPIUM_CARTIER_IMAGE}}
+    image: {{APPIUM_CARTIEREJ_IMAGE}}
     container_name: {{CONTAINER_NAME}}
     environment:
         - APK_NAME={{APK_NAME}}
         - PLATFORM_VERSION={{PLATFORM_VERSION}}
-        - APP_NAME={{APP_NAME}}
         - DEVICES_NAME={{DEVICES_NAME}}
+        - MOBILE_PHONE_NUMBER={{MOBILE_PHONE_NUMBER}}
+        - CODE={{CODE}}
+        - NEW_COMMAND_TIME_OUT={{NEW_COMMAND_TIME_OUT}}
     ports:
         - "{{PORTS}}"
-    command: "{{APPIUM_CARTIER_CMD}}"
+    command: "{{APPIUM_CARTIEREJ_CMD}}"
     volumes:
-        - {{APPIUM_CARTIER_LOGS_VOLUMES}}
+        - {{APPIUM_CARTIEREJ_LOGS_VOLUMES}}
         - {{DOCKER_COMPOSE_VOLUMES}}
         - {{APP_APK_VOLUMES}}
