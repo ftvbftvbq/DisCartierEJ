@@ -116,3 +116,7 @@ def disconnect_remote_session(serial=None):
         except Exception as err:
             logger.error(err)
         return True
+
+
+if __name__ == '__main__':
+    disconnect_remote_session("Y15QKBP323GGV")

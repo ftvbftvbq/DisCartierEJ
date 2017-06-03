@@ -10,6 +10,7 @@
 import Queue
 import logging
 import os
+import time
 import subprocess
 import threading
 
@@ -18,6 +19,7 @@ from conftest import disconnect_remote_session
 logger = logging.getLogger(__name__)
 q = Queue.Queue(0)
 NUM_WORKERS = 3
+queueLock = threading.Lock()
 
 
 class MyThread(threading.Thread):
@@ -35,21 +37,24 @@ class MyThread(threading.Thread):
             Stop when there's no more jobs
         """
         while True:
+            queueLock.acquire()
             if self._jobq.qsize() > 0:
                 job = self._jobq.get()
+                queueLock.release()
                 serial = job["serial"]
                 file = job["file"]
                 self._process_job(file, serial)
             else:
-                break
+                queueLock.release()
 
     def _process_job(self, file, serial):
         """
             Do useful work here.
         """
         logger.info(self.name + "\t begin to run " + serial)
-        thread_name = self.name
+        thread_name = self.name+"-"+serial
         do_job(thread_name, file, serial)
+        time.sleep(1)
 
 
 def do_job(thread_name, file, serial):
@@ -66,10 +71,11 @@ def do_job(thread_name, file, serial):
                     subprocess.call(["docker-compose up"], shell=True)
                 except Exception as err:
                     logger.error(err)
+                    logger.info(thread_name + " occur errors to release session.")
+                    disconnect_remote_session(serial=serial)
+                finally:
                     logger.info(thread_name + " release session.")
-                    disconnect_remote_session(serial)
-                else:
-                    logger.info(thread_name + " normal run!")
+                    disconnect_remote_session(serial=serial)
             else:
                 pass
     else:
@@ -83,11 +89,13 @@ def put_jobs(base_path=None):
     logger.info("Begin to put jobs in queue......")
     base_path = os.path.abspath(base_path)
     files = os.listdir(base_path)
+    queueLock.acquire()
     for f in files:
         serial = f
         f = os.path.join(base_path, f)
         d = {"file": f, "serial": serial}
         q.put(d)
+    queueLock.release()
     logger.info("Put " + str(q.qsize()) + " job.....")
     return q
 
