@@ -85,7 +85,7 @@ desired_caps中的信息替换成如下格式。
         # -*- coding: utf-8 -*-
 
         # stf_url address
-        STF_URL = "http://10.12.144.16:7100/api/v1/devices"
+        STF_URL = "http://xxx.xxx.xxx.xxx:7100/api/v1/devices"
 
         """
         access token of stf
@@ -96,29 +96,32 @@ desired_caps中的信息替换成如下格式。
         tab and generate a new access token in Keys section.
         Don't forget to save this token somewhere, you will not be able to see it again.
         """
-        TOKEN = "3e5dd447cd334d549c849d19707eb269df74cabd67e5400986a5240023af6421"
+        TOKEN = "..."
 
-        STF_DELETE_URL = "http://10.12.144.16:7100/api/v1/user/devices/"
+        STF_DELETE_URL = "http://xxx.xxx.xxx.xxx:7100/api/v1/user/devices/"
 
         # some variables in desired_capablities
         PLATFORM_NAME = 'Android'
         NEW_COMMAND_TIMEOUT = 60
         # the apk place in container
-        APK_NAME = "/apk_shell/com.xingin.xhs-test-4.20.apk"
+        APK_NAME = "/apk_shell/xxx.apk"
         # come infomation needed by docker_compose.yml
-        APPIUM_CARTIEREJ_IMAGE = "suifengdeshitou/liuwei:latest"
+        APPIUM_CARTIEREJ_IMAGE = "xxxxxxx"
         PORTS = 4723
         APPIUM_CARTIEREJ_CMD = "bash /app_shell/app.sh"
-        APP_APK_VOLUMES = "/Users/red/temp/appium:/apk_shell"
+
+        # xxxxxx is local file which contains apk
+        # You need to change to yourself.
+        APP_APK_VOLUMES = "xxxxxxxxxxx:/apk_shell"
 
         """
         Use device name as directory to save docker_compose.yml and app.sh
         Need abs path
         """
-        DOCKER_COMPOSE_VOLUMES = "/Users/red/PycharmProjects/cartier_distributor/resources/dockercomposes/"
+        DOCKER_COMPOSE_VOLUMES = "xxxxxx/DisCartierEJ/resources/dockercomposes/"
 
         # logs save place in local
-        LOCAL_LOG_DIR = "/Users/red/tmp/logs/"
+        LOCAL_LOG_DIR = "xxxxx"
         APPIUM_CARTIEREJ_LOGS_VOLUMES = LOCAL_LOG_DIR + 'RANDOM:/opt/node/CartierEJ/logs'  # RANDOM为变量在生成的过程中替换
 
         # case to run
