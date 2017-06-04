@@ -4,5 +4,3 @@ dockercomposes
 __pycache__
 .idea
 *.html
-*.png
-*.jpeg
