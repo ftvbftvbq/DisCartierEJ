@@ -90,8 +90,9 @@ def docker_composes_data(users=None,devices=None):
             docker_compose_data['CASE_NAME'] = v.CASE_NAME
             docker_compose_data['NEW_COMMAND_TIME_OUT'] = v.NEW_COMMAND_TIMEOUT
             docker_compose_data['MOBILE_PHONE_NUMBER'] = users[count][0]
-            docker_compose_data['CODE'] = users[count][1]
+            docker_compose_data['CODE'] = str(users[count][1]).strip('\r\n')
             docker_composes_list.append(docker_compose_data)
+            count += 1
     else:
         logger.info("No devices.")
     return docker_composes_list

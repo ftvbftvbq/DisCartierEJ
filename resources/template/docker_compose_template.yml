@@ -9,8 +9,8 @@ services:
         - PLATFORM_VERSION={{PLATFORM_VERSION}}
         - DEVICES_NAME={{DEVICES_NAME}}
         - MOBILE_PHONE_NUMBER={{MOBILE_PHONE_NUMBER}}
-        - CODE={{CODE}}
         - NEW_COMMAND_TIME_OUT={{NEW_COMMAND_TIME_OUT}}
+        - CODE={{CODE}}
     ports:
         - "{{PORTS}}"
     command: "{{APPIUM_CARTIEREJ_CMD}}"

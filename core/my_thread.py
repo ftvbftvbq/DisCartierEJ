@@ -54,7 +54,7 @@ class MyThread(threading.Thread):
         logger.info(self.name + "\t begin to run " + serial)
         thread_name = self.name+"-"+serial
         do_job(thread_name, file, serial)
-        time.sleep(1)
+        time.sleep(2)
 
 
 def do_job(thread_name, file, serial):
