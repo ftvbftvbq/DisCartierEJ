@@ -25,7 +25,7 @@
 4. 在jenkins可以进行巡检，并将结果通过展示出来，（这个还没有实现，有尝试过，但是没有办法把本地运行stf的机器（需要将手机本地连接到一个主机上）当做腾讯云的一个slave,而暂时暂停（ssh连接，如果通过域名，应该是可以作为一个slave的））。
 
 ## DisCartierEJ 的架构
-<img src="pics_resources/DisCartierEJ.png"></img>
+<img src="pics_resources/DisCartierEJ.png"\>
 上图是DisCartierEJ的架构图，下面根据一个使用者的流程对这个图进行介绍。
 
 1. 深蓝色部分，用户希望自己的case在三台设备上跑一下。
@@ -53,7 +53,7 @@
 	
 6. 然后将返回来的三个设备信息，根据设备名生产三个文件夹，并将每个设备的信息注入到相应文件夹下的docker_compose.yml中的环境变量中。
 	
-	<img src='pics_resources/moban.jpeg'></img>
+	<img src='pics_resources/moban.jpeg'\>
 7. 启动up每一个文件夹下的docker_compose.yml，生成对应的容器，每个容器会先启动appium 然后运行case。
 	
 8. 对应的日志会映射在本地，jenkins 根据日志，生成report。
